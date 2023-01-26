@@ -24,7 +24,7 @@ export function New () {
 
     try {
       setIsLoading(true)
-      await api.post('/polls', { title })
+      await api.post('/polls', { title: title.trim().toUpperCase() })
       toast.show({
         title: 'Bolão criado com sucesso.',
         placement: 'top',
