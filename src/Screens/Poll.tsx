@@ -57,10 +57,15 @@ export function Poll () {
         <FlatList
           data={polls}
           keyExtractor={poll => poll.id}
-          renderItem={({ item }) => <PollCard data={item} />}
+          renderItem={({ item }) => (
+            <PollCard
+              data={item}
+              onPress={() => navigate('details', { id: item.id })}
+            />
+          )}
           showsVerticalScrollIndicator={false}
           ListEmptyComponent={() => <EmptyPollList />}
-          _contentContainerStyle={{ pb: 10 }}
+          _contentContainerStyle={{ pb: 20 }}
           px={5}
         />
       }
