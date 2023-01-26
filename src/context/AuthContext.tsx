@@ -3,6 +3,7 @@ import * as Google from 'expo-auth-session/providers/google'
 import * as AuthSession from 'expo-auth-session'
 import * as WebBrowser from 'expo-web-browser'
 import { api } from "../services/api";
+import { useToast } from "native-base";
 
 WebBrowser.maybeCompleteAuthSession()
 
@@ -28,10 +29,12 @@ export function AuthContextProvider ({ children }: AuthProviderProps) {
   const [user, setUser] = useState<UserProps>({} as UserProps)
 
   const [request, response, promptAsync] = Google.useAuthRequest({
-    clientId: '382236029157-2v4kt9lgpr8lfl1jhbol7r544gqleojt.apps.googleusercontent.com',
+    clientId: process.env.CLIENT_ID,
     redirectUri: AuthSession.makeRedirectUri({ useProxy: true }),
     scopes: ['profile', 'email']
   })
+
+  const toast = useToast()
 
   async function signIn () {
     try {
@@ -56,7 +59,12 @@ export function AuthContextProvider ({ children }: AuthProviderProps) {
       setUser(userInfoResponse.data.user)
 
     } catch (error) {
-      console.log(error);
+      toast.show({
+        title: 'Erroo',
+        placement: 'top',
+        bgColor: 'red.500'
+      })
+      console.log(error.response);
       throw error
     } finally {
       setUserIsLoading(false)
