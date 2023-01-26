@@ -4,7 +4,7 @@ import { Octicons } from '@expo/vector-icons'
 import { Header } from "../components/Header";
 import { Button } from "../components/Button";
 
-export function Find () {
+export function Poll () {
   return (
     <VStack flex={1} bgColor="gray.900">
       <Header title="Buscar por código" />
