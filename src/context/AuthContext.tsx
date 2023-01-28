@@ -63,7 +63,7 @@ export function AuthContextProvider ({ children }: AuthProviderProps) {
 
     } catch (error) {
       toast.show({
-        title: 'Erroo',
+        title: 'Erro ao iniciar sessão. Tente novamente',
         placement: 'top',
         bgColor: 'red.500'
       })
