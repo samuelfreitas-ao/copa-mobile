@@ -4,6 +4,7 @@ export declare global {
       new: undefined
       polls: undefined
       find: undefined
+      signin: undefined
       details: {
         id: string
       }

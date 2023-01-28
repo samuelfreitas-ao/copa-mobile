@@ -14,7 +14,7 @@ interface Props {
 };
 
 export function Participants ({ participants, count }: Props) {
-  const moreParticipants = count - 1
+  const moreParticipants = count - participants.length
   return (
     <HStack>
       {

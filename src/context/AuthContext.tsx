@@ -16,6 +16,7 @@ export interface AuthContextDataProps {
   user: UserProps
   userIsLoading: boolean
   signIn: () => Promise<void>,
+  signOut: () => Promise<void>,
 }
 
 interface AuthProviderProps {
@@ -29,7 +30,7 @@ export function AuthContextProvider ({ children }: AuthProviderProps) {
   const [user, setUser] = useState<UserProps>({} as UserProps)
 
   const [request, response, promptAsync] = Google.useAuthRequest({
-    clientId: process.env.CLIENT_ID,
+    clientId: process.env.GOOGLE_CLIENT_ID,
     redirectUri: AuthSession.makeRedirectUri({ useProxy: true }),
     scopes: ['profile', 'email']
   })
@@ -52,7 +53,9 @@ export function AuthContextProvider ({ children }: AuthProviderProps) {
   async function signInWithGoogle (access_token: string) {
     try {
       setUserIsLoading(true)
-      const response = await api.post('/users', { access_token })
+      // console.log('access_token', access_token);
+
+      const response = await api.post('/login', { access_token })
       api.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`
 
       const userInfoResponse = await api.get('/me')
@@ -71,6 +74,10 @@ export function AuthContextProvider ({ children }: AuthProviderProps) {
     }
   }
 
+  async function signOut () {
+    setUser({} as UserProps)
+  }
+
   useEffect(() => {
     if (response?.type === 'success' && response.authentication?.accessToken) {
       signInWithGoogle(response.authentication.accessToken)
@@ -80,6 +87,7 @@ export function AuthContextProvider ({ children }: AuthProviderProps) {
   return (
     <AuthContext.Provider value={{
       signIn,
+      signOut,
       user,
       userIsLoading
     }}>

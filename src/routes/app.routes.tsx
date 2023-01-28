@@ -7,6 +7,7 @@ import { Poll } from '../Screens/Poll'
 import { Platform } from 'react-native'
 import { Find } from '../Screens/Find'
 import { Detais } from '../Screens/Details'
+import { Signin } from '../Screens/Signin'
 
 const { Navigator, Screen } = createBottomTabNavigator()
 
@@ -51,6 +52,14 @@ export function AppRoutes () {
       <Screen
         name='find'
         component={Find}
+        options={{
+          tabBarButton: () => null
+        }}
+      />
+
+      <Screen
+        name='signin'
+        component={Signin}
         options={{
           tabBarButton: () => null
         }}
